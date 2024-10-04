@@ -5,9 +5,9 @@ __author__ = "730765850"
 
 def input_guess(secret_word_len: int) -> str:
     """ensures the inputed string is the approriate length"""
-    guess = input("Enter a 5 character word: ")
+    guess: str = input(f"Enter a {secret_word_len} character word: ")
     while len(guess) != secret_word_len:
-        guess = input(f"That wasn't {secret_word_len} chars! Try again: ")
+        guess = str(input(f"That wasn't {secret_word_len} chars! Try again: "))
         # I LOVE FSTRINGS!!!
         # was stumped until realizing that the guess function would
         # need to be prompted to change inside the loop
@@ -29,7 +29,7 @@ def contains_char(input_str: str, chr_searching_for: str) -> bool:
     return True
 
 
-def emojified(str_guess: str, secret_wrd: str):
+def emojified(str_guess: str, secret_wrd: str) -> str:
     """this function decides what color block should be labeled at each index
     to hint the user at where their guess lands them compared to the actual word"""
     assert len(str_guess) == len(secret_wrd)
@@ -42,21 +42,15 @@ def emojified(str_guess: str, secret_wrd: str):
     index_iterate: int = 0
     while index_iterate < len(secret_wrd):
         # initially tried calling contains_char at a broader scope and using its value
-        # like that. that didnt work so i called it in every conditional instead
-        # could've used the += operator but i forgor :(
-        if (
-            contains_char(
-                input_str=str_guess, chr_searching_for=secret_wrd[index_iterate]
-            )
-            and str_guess[index_iterate] == secret_wrd[index_iterate]
-        ):
-            emoji_trail = emoji_trail + GREEN_BOX
+        # like that. that didnt work so i called it in conditional instead
+        if str_guess[index_iterate] == secret_wrd[index_iterate]:
+            emoji_trail += GREEN_BOX
         elif contains_char(
-            input_str=str_guess, chr_searching_for=secret_wrd[index_iterate]
+            input_str=secret_wrd, chr_searching_for=str_guess[index_iterate]
         ):
-            emoji_trail = emoji_trail + YELLOW_BOX
+            emoji_trail += YELLOW_BOX
         else:
-            emoji_trail = emoji_trail + WHITE_BOX
+            emoji_trail += WHITE_BOX
         index_iterate += 1
     return emoji_trail
 
